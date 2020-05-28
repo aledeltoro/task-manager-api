@@ -8,41 +8,26 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// We need to mark our functions with the "async" keyword
-
-app.post("/users", async (req, res) => {
+app.post("/users", (req, res) => {
   const user = new User(req.body);
 
-  // We can handle individual errors from individual promises with the "try-catch" statement
-  try {
-    await user.save(); // The code after this function will only run if the promise was fulfilled, otherwise, the code will stop
-    res.status(201).send(user); // If the promise is fulfilled this response will be sent
-  } catch(error) {
-    // If the "save" promise throw an error, then this response will be sent
-    res.status(400).send(error);
-  }
-  
-  // We need to refactor this code
-  // user.save()
-  //   .then((user) => {
-  //     res.status(201).send(user);
-  //   })
-  //   .catch((err) => {
-  //     res.status(400).send(err);
-  //   });
+  user.save()
+    .then((user) => {
+      res.status(201).send(user);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
 });
 
-app.get("/users", async (req, res) => {
-    
-
-
-  // User.find({})
-  //   .then((users) => {
-  //     res.status(200).send(users);
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send();
-  //   });
+app.get("/users", (req, res) => {
+  User.find({})
+    .then((users) => {
+      res.status(200).send(users);
+    })
+    .catch((err) => {
+      res.status(500).send();
+    });
 });
 
 app.get("/users/:id", (req, res) => {
