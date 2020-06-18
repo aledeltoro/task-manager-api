@@ -61,7 +61,6 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
-// Statics methods are accessible through the model. These are also referred to as "model methods"
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
@@ -78,7 +77,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
-// Hash plain text password before saving
 userSchema.pre("save", async function (next) {
   const user = this;
 

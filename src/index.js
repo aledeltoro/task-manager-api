@@ -10,9 +10,6 @@ app.use(express.json());
 app.use(userRouter); 
 app.use(taskRouter);
 
-
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-
